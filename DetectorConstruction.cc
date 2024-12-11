@@ -36,6 +36,7 @@
 #include "G4PVPlacement.hh"
 #include "G4SystemOfUnits.hh"
 #include "G4Trd.hh"
+#include "CADMesh.hh"
 
 namespace B1
 {
@@ -98,7 +99,25 @@ G4VPhysicalVolume* DetectorConstruction::Construct()
                     false,  // no boolean operation
                     0,  // copy number
                     checkOverlaps);  // overlaps checking
+  auto mesh = CADMesh::TessellatedMesh::FromSTL("/usr/local/share/Geant4/examples/NaGeant4/Drawing2.stl");
+  auto cadSolid = mesh->GetSolid();
+  //
+  // Shape 1
+  //
+  G4Material* shape1_mat = nist->FindOrBuildMaterial("G4_A-150_TISSUE");
+  G4ThreeVector pos1 = G4ThreeVector(0, 2 * cm, -7 * cm);
+  auto logicShape1 = new G4LogicalVolume(cadSolid,  // its solid
+      shape1_mat,  // its material
+      "Shape1");  // its name
 
+  new G4PVPlacement(nullptr,  // no rotation
+      pos1,  // at position
+      logicShape1,  // its logical volume
+      "Shape1",  // its name
+      logicEnv,  // its mother  volume
+      false,  // no boolean operation
+      0,  // copy number
+      checkOverlaps);  // overlaps checking
   //
   // Shape 2
   //
