@@ -50,7 +50,7 @@ G4VPhysicalVolume* DetectorConstruction::Construct()
 
   // Envelope parameters
   //
-  G4double env_sizeXY = 20 * cm, env_sizeZ = 30 * cm;
+  G4double env_sizeXY = 100 * cm, env_sizeZ = 100 * cm;
   G4Material* env_mat = nist->FindOrBuildMaterial("G4_WATER");
 
   // Option to switch on/off checking of volumes overlaps
@@ -105,7 +105,7 @@ G4VPhysicalVolume* DetectorConstruction::Construct()
   // Shape 1
   //
   G4Material* shape1_mat = nist->FindOrBuildMaterial("G4_A-150_TISSUE");
-  G4ThreeVector pos1 = G4ThreeVector(0, 2 * cm, -7 * cm);
+  G4ThreeVector pos1 = G4ThreeVector(0, 10 * cm, -10 * cm);
   auto logicShape1 = new G4LogicalVolume(cadSolid,  // its solid
       shape1_mat,  // its material
       "Shape1");  // its name
