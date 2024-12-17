@@ -96,7 +96,7 @@ void PrimaryGeneratorAction::GeneratePrimaries(G4Event* event)
 
   G4double size = 0.8;
   G4double x0 = size * envSizeXY * (G4UniformRand() - 0.5);
-  G4double y0 = 0.;
+  G4double y0 = size * envSizeZ * 0.5;
   G4double z0 = size * envSizeZ * (G4UniformRand() - 0.5);
 
   fParticleGun->SetParticlePosition(G4ThreeVector(x0, y0, z0));
