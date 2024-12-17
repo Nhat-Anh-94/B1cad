@@ -50,7 +50,7 @@ G4VPhysicalVolume* DetectorConstruction::Construct()
 
   // Envelope parameters
   //
-  G4double env_sizeXY = 100 * cm, env_sizeZ = 100 * cm;
+  G4double env_sizeXY = 50 * cm, env_sizeZ = 50 * cm;
   G4Material* env_mat = nist->FindOrBuildMaterial("G4_WATER");
 
   // Option to switch on/off checking of volumes overlaps
@@ -122,16 +122,17 @@ G4VPhysicalVolume* DetectorConstruction::Construct()
   // Shape 2
   //
   G4Material* shape2_mat = nist->FindOrBuildMaterial("G4_BONE_COMPACT_ICRU");
-  G4ThreeVector pos2 = G4ThreeVector(0, -1 * cm, 7 * cm);
+  G4ThreeVector pos2 = G4ThreeVector(0, 5 * cm, 0 * cm);
 
   // Trapezoid shape
-  G4double shape2_dxa = 12 * cm, shape2_dxb = 12 * cm;
+  /*G4double shape2_dxa = 12 * cm, shape2_dxb = 12 * cm;
   G4double shape2_dya = 10 * cm, shape2_dyb = 16 * cm;
   G4double shape2_dz = 6 * cm;
   auto solidShape2 =
     new G4Trd("Shape2",  // its name
               0.5 * shape2_dxa, 0.5 * shape2_dxb, 0.5 * shape2_dya, 0.5 * shape2_dyb,
-              0.5 * shape2_dz);  // its size
+              0.5 * shape2_dz);  // its size*/
+  auto solidShape2 = new G4Box("Shape2", 2.5 * cm, 1 * cm, 2.5 * cm);
 
   auto logicShape2 = new G4LogicalVolume(solidShape2,  // its solid
                                          shape2_mat,  // its material
