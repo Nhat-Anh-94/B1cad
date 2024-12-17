@@ -105,7 +105,7 @@ G4VPhysicalVolume* DetectorConstruction::Construct()
   // Shape 1
   //
   G4Material* shape1_mat = nist->FindOrBuildMaterial("G4_A-150_TISSUE");
-  G4ThreeVector pos1 = G4ThreeVector(0, -40 * cm, 0 * cm);
+  G4ThreeVector pos1 = G4ThreeVector(-2.5*cm, -35 * cm, -2.5 * cm);
   auto logicShape1 = new G4LogicalVolume(cadSolid,  // its solid
       shape1_mat,  // its material
       "Shape1");  // its name
