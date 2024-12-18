@@ -1,4 +1,4 @@
-//
+﻿//
 // ********************************************************************
 // * License and Disclaimer                                           *
 // *                                                                  *
@@ -67,42 +67,31 @@ PrimaryGeneratorAction::~PrimaryGeneratorAction()
 
 void PrimaryGeneratorAction::GeneratePrimaries(G4Event* event)
 {
-  // this function is called at the begining of ecah event
-  //
+	// 
+	G4double x0 = 0.0 * m;
+	G4double y0 = 0.0 * m;
+	G4double z0 = 0.0 * m;
 
-  // In order to avoid dependence of PrimaryGeneratorAction
-  // on DetectorConstruction class we get Envelope volume
-  // from G4LogicalVolumeStore.
+	fParticleGun->SetParticlePosition(G4ThreeVector(x0, y0, z0));
 
-  G4double envSizeXY = 0;
-  G4double envSizeZ = 0;
+	// 
+	G4double theta = 2 * M_PI * G4UniformRand();           // 
+	G4double phi = std::acos(1 - 2 * G4UniformRand());     // 
 
-  if (!fEnvelopeBox) {
-    G4LogicalVolume* envLV = G4LogicalVolumeStore::GetInstance()->GetVolume("Envelope");
-    if (envLV) fEnvelopeBox = dynamic_cast<G4Box*>(envLV->GetSolid());
-  }
+	// 
+	G4double ux = std::sin(phi) * std::cos(theta);  // 
+	G4double uy = std::sin(phi) * std::sin(theta);  // 
+	G4double uz = std::cos(phi);                    // 
 
-  if (fEnvelopeBox) {
-    envSizeXY = fEnvelopeBox->GetXHalfLength() * 2.;
-    envSizeZ = fEnvelopeBox->GetZHalfLength() * 2.;
-  }
-  else {
-    G4ExceptionDescription msg;
-    msg << "Envelope volume of box shape not found.\n";
-    msg << "Perhaps you have changed geometry.\n";
-    msg << "The gun will be place at the center.";
-    G4Exception("PrimaryGeneratorAction::GeneratePrimaries()", "MyCode0002", JustWarning, msg);
-  }
+	fParticleGun->SetParticleMomentumDirection(G4ThreeVector(ux, uy, uz));
 
-  G4double size = 0.8;
-  G4double x0 = size * envSizeXY * (G4UniformRand() - 0.5);
-  G4double y0 = size * envSizeZ * 0.5;
-  G4double z0 = size * envSizeZ * (G4UniformRand() - 0.5);
+	// 
+	fParticleGun->SetParticleEnergy(0.6 * MeV);
 
-  fParticleGun->SetParticlePosition(G4ThreeVector(x0, y0, z0));
-
-  fParticleGun->GeneratePrimaryVertex(event);
+	// 
+	fParticleGun->GeneratePrimaryVertex(event);
 }
+
 
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
 
