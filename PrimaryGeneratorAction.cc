@@ -84,7 +84,7 @@ namespace B1
 
 		// Tính toán các thành phần của vectơ hướng
 		G4double ux = std::sin(phi) * std::cos(theta);  // Thành phần x của vectơ hướng
-		G4double uy = std::cos(phi); // Thành phần y của vectơ hướng (lúc nào cũng âm)
+		G4double uy = -1*std::cos(phi); // Thành phần y của vectơ hướng (lúc nào cũng âm)
 		G4double uz = std::sin(phi) * std::sin(theta);                    // Thành phần z của vectơ hướng
 
 		fParticleGun->SetParticleMomentumDirection(G4ThreeVector(ux, uy, uz));
