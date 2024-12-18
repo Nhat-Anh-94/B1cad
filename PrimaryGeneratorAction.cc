@@ -67,31 +67,34 @@ PrimaryGeneratorAction::~PrimaryGeneratorAction()
 
 void PrimaryGeneratorAction::GeneratePrimaries(G4Event* event)
 {
-	// 
+	// Vị trí phát hạt (có thể giữ nguyên)
 	G4double x0 = 0.0 * m;
 	G4double y0 = 0.25 * m;
 	G4double z0 = 0.0 * m;
 
 	fParticleGun->SetParticlePosition(G4ThreeVector(x0, y0, z0));
 
-	// 
-	G4double theta = 2 * M_PI * G4UniformRand();           // 
-	G4double phi = std::acos(1 - 2 * G4UniformRand());     // 
+	// Tham số góc mở của nón (tính bằng radian)
+	G4double theta_max = 20.0 * deg;  // Góc mở của nón, ví dụ 20 độ
 
-	// 
-	G4double ux = std::sin(phi) * std::cos(theta);  // 
-	G4double uy = std::sin(phi) * std::sin(theta);  // 
-	G4double uz = std::cos(phi);                    // 
+	// Sinh góc phương vị (theta) trong khoảng [0, 2π]
+	G4double theta = 2 * M_PI * G4UniformRand();  // Góc phương vị
+	// Sinh góc cực (phi) trong khoảng [0, theta_max]
+	G4double phi = theta_max * G4UniformRand();   // Góc cực nằm trong [0, theta_max]
+
+	// Tính toán các thành phần của vectơ hướng
+	G4double ux = std::sin(phi) * std::cos(theta);  // Thành phần x của vectơ hướng
+	G4double uy = std::sin(phi) * std::sin(theta);  // Thành phần y của vectơ hướng
+	G4double uz = std::cos(phi);                    // Thành phần z của vectơ hướng
 
 	fParticleGun->SetParticleMomentumDirection(G4ThreeVector(ux, uy, uz));
 
-	// 
+	// Đặt năng lượng của hạt
 	fParticleGun->SetParticleEnergy(0.6 * MeV);
 
-	// 
+	// Sinh ra sự kiện (phát hạt)
 	fParticleGun->GeneratePrimaryVertex(event);
 }
-
 
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
 
