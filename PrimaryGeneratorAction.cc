@@ -84,7 +84,7 @@ void PrimaryGeneratorAction::GeneratePrimaries(G4Event* event)
 
 	// Tính toán các thành phần của vectơ hướng
 	G4double ux = std::sin(phi) * std::cos(theta);  // Thành phần x của vectơ hướng
-	G4double uy = std::sin(phi) * std::sin(theta);  // Thành phần y của vectơ hướng
+	G4double uy = -std::sin(phi) * std::sin(theta);  // Thành phần y của vectơ hướng
 	G4double uz = std::cos(phi);                    // Thành phần z của vectơ hướng
 
 	fParticleGun->SetParticleMomentumDirection(G4ThreeVector(ux, uy, uz));
